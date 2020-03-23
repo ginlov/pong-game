@@ -27,7 +27,12 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     private int pa1 = -1;
     private int pa2 = -1;
 
+    paddle1 player1 = new paddle1();
+    paddle2 player2 = new paddle2();
+
     public gameplay(){
+
+        setLocation(0,0);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -42,10 +47,10 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
 
         //player1
         g.setColor(Color.white);
-        g.fillRect(15, player1Y, 15, 150);
+        //g.fillRect(15, player1Y, 15, 150);
 
         //player2
-        g.fillRect(1470, player2Y, 15, 150);
+        //g.fillRect(1470, player2Y, 15, 150);
 
         //ball
         g.fillOval(ballposX, ballposY, 15, 15);
@@ -57,6 +62,7 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
         }
 
         g.dispose();
+
     }
 
     @Override
@@ -71,21 +77,21 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_UP){
-            pa1 = 0;
-            move1up();
-        }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN)
-        {
-            pa1 = 1;
-            move1down();
-        }
-        if(keyEvent.getKeyCode() == KeyEvent.VK_W){
-            move2up();
-        }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_S){
-            move2down();
-        }
+        //if(keyEvent.getKeyCode() == KeyEvent.VK_UP){
+        //    pa1 = 0;
+        //    move1up();
+        //}
+        //else if(keyEvent.getKeyCode() == KeyEvent.VK_DOWN)
+        //{
+        //    pa1 = 1;
+         //   move1down();
+        //}
+        //if(keyEvent.getKeyCode() == KeyEvent.VK_W){
+        //    move2up();
+        //}
+        //else if(keyEvent.getKeyCode() == KeyEvent.VK_S){
+        //    move2down();
+        //}
     }
 
     // control the paddles
@@ -102,12 +108,14 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     }
 
     public void move2up(){
-
+        if(player2Y<=10) move2down();
+        else {
+            player2Y -= 10;
+            //move2up();
+        }
     }
 
-    public void move2down(){
-
-    }
+    public void move2down(){ }
 
 
 }
