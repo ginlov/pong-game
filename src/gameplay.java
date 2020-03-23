@@ -97,7 +97,7 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
         }
 
         // right pad, the second pad
-        if(ballx>=1470 && dirx>0){
+        if(ballx>=1450 && dirx>0){
             if(bally+10<pos2+padh && bally+10>=pos2){
                 dirx = -dirx;
             }
