@@ -26,6 +26,7 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
 
     private String one, two;
 
+    private int segmentlength = 75;
 
     public gameplay(){
         //setBackground(Color.black);
@@ -57,8 +58,14 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
             one = "Score 1: " + score1;
             two = "Score 2: " + score2;
 
-            g2D.drawString(one, 700, 15);
+            g2D.drawString(one, 650, 15);
             g2D.drawString(two, 800, 15);
+
+            int t = 0;
+            while(t+segmentlength<=1000){
+                g2D.fillRect(750, t, 3, segmentlength);
+                t+=2*segmentlength;
+            }
 
             g.dispose();
         }
