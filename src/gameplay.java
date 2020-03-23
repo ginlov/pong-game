@@ -40,41 +40,51 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        try {
-            g2D.fillOval(ballx, bally, 20, 20);
-        } catch(Exception e){}
-        finally {
-
-            Rectangle pad1 = new Rectangle(10, pos1, padw, padh);
-            Rectangle pad2 = new Rectangle(1470, pos2, padw, padh);
-
-            g2D.setColor(Color.black);
-            g2D.fill(pad1);
-            g2D.fill(pad2);
-
-            //Ellipse2D ball = new Ellipse2D.Double(ballx, bally, rad, rad);
+        if(score1<10 && score2<10) {
 
 
-            one = "Score 1: " + score1;
-            two = "Score 2: " + score2;
+            try {
+                g2D.fillOval(ballx, bally, 20, 20);
+            } catch (Exception e) {
+            } finally {
 
-            g2D.drawString(one, 650, 15);
-            g2D.drawString(two, 800, 15);
+                Rectangle pad1 = new Rectangle(10, pos1, padw, padh);
+                Rectangle pad2 = new Rectangle(1470, pos2, padw, padh);
 
-            int t = 0;
-            while(t+segmentlength<=1000){
-                g2D.fillRect(750, t, 3, segmentlength);
-                t+=2*segmentlength;
+                g2D.setColor(Color.black);
+                g2D.fill(pad1);
+                g2D.fill(pad2);
+
+                //Ellipse2D ball = new Ellipse2D.Double(ballx, bally, rad, rad);
+
+
+                one = "Score 1: " + score1;
+                two = "Score 2: " + score2;
+
+                g2D.drawString(one, 650, 15);
+                g2D.drawString(two, 800, 15);
+
+                int t = 0;
+                while (t + segmentlength <= 1000) {
+                    g2D.fillRect(750, t, 3, segmentlength);
+                    t += 2 * segmentlength;
+                }
+                
+                g.dispose();
             }
-
-            g.dispose();
+        }
+        else if(score1 == 10){
+            g2D.drawString("Player1 Win!!", 700, 500);
+        }
+        else if(score2 == 10){
+            g2D.drawString("Player2 Win!!", 700, 500);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         // ball side walls
-        if(bally<0 || bally + 20>1000){
+        if(bally<0 || bally + 40>=1000){
             diry = -diry;
         }
 
