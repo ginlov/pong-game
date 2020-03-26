@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class main {
     public static void main(String[] args){
+        System.gc();
         JFrame fr = new JFrame("Pong");
         gameplay  game = new gameplay();
 

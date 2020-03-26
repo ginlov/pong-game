@@ -13,10 +13,12 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     private int pos2 = 500;
     private int padh = 150;
     private int padw = 15;
+    private int speed = 5;
 
-    private int ballx = 740, bally = 490;
-    private int score1 = 0;
-    private int score2 = 0;
+    private int ballsize = 20;
+    private int ballx, bally;
+    private int score1;
+    private int score2;
 
     private int dirx = 2;
     private int diry = 2;
@@ -24,32 +26,49 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     private int stage1 = -1;
     private int stage2 = -1;
 
+    private int padding = 15;
+
     private String one, two;
 
-    private int segmentlength = 75;
+    private int segmentlength;
+    private int width, height;
 
     public gameplay(){
+
         //setBackground(Color.black);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         //t.setInitialDelay(100);
+        score1 = 0;
+        score2 = 0;
         t.start();
     }
 
+    int test = 1;
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
         Graphics2D g2D = (Graphics2D) g;
+        if(test == 1) {
+            width = (int)getWidth();
+            height = (int)getHeight();
+            test = 0;
+            ballx = (int)width/2;
+            bally = (int)height/2;
+            segmentlength = (int) (height/9);
+        }
+
         if(score1<10 && score2<10) {
 
 
             try {
-                g2D.fillOval(ballx, bally, 20, 20);
+                g2D.fillOval(ballx, bally, ballsize, ballsize);
             } catch (Exception e) {
             } finally {
 
-                Rectangle pad1 = new Rectangle(10, pos1, padw, padh);
-                Rectangle pad2 = new Rectangle(1470, pos2, padw, padh);
+                Rectangle pad1 = new Rectangle(padding, pos1, padw, padh);
+                Rectangle pad2 = new Rectangle(width-padding - padw, pos2, padw, padh);
 
                 g2D.setColor(Color.black);
                 g2D.fill(pad1);
@@ -65,8 +84,8 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
                 g2D.drawString(two, 800, 15);
 
                 int t = 0;
-                while (t + segmentlength <= 1000) {
-                    g2D.fillRect(750, t, 3, segmentlength);
+                while (t + segmentlength <= height) {
+                    g2D.fillRect(width/2, t, 3, segmentlength);
                     t += 2 * segmentlength;
                 }
                 
@@ -81,10 +100,11 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
         }
     }
 
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         // ball side walls
-        if(bally<0 || bally + 40>=1000){
+        if(bally<0 || bally + ballsize>=height){
             diry = -diry;
         }
 
@@ -94,21 +114,21 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
             score2++;
         }
 
-        if(ballx + 20>1500){
+        if(ballx + ballsize >= width){
             dirx = -dirx;
             score1++;
         }
 
         //left pad, the first pad
-        if(ballx<= 25 && dirx<0){
-            if(bally+10<=pos1+padh && bally+10>=pos1){
+        if(ballx<= padding+padw && dirx<0){
+            if(bally<=pos1+padh && bally+ballsize>=pos1){
                 dirx = -dirx;
             }
         }
 
         // right pad, the second pad
-        if(ballx>=1450 && dirx>0){
-            if(bally+10<pos2+padh && bally+10>=pos2){
+        if(ballx>=width-ballsize-padding-padw && dirx>0){
+            if(bally<pos2+padh && bally+ballsize>=pos2){
                 dirx = -dirx;
             }
         }
@@ -117,15 +137,15 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
 
         //press key
         if(stage1 == 0){
-            pos1 += (pos1<=840)?10:0;
+            pos1 += (pos1<=height-speed-padh)?speed:0;
         }else if(stage1 == 1){
-            pos1 -= (pos1>=10)?10:0;
+            pos1 -= (pos1>=speed)?speed:0;
         }
 
         if(stage2 == 0){
-            pos2 += (pos2<=840)?10:0;
+            pos2 += (pos2<=height-speed-padh)?speed:0;
         }else if(stage2 == 1){
-            pos2 -= (pos2>=10)?10:0;
+            pos2 -= (pos2>=speed)?speed:0;
         }
 
         repaint();
